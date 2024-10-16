@@ -123,6 +123,10 @@ extension HMSRoomModel {
 @MainActor
 extension HMSRoomModel {
     
+    public func toggleLayout() {
+        isLocalTileInset = !isLocalTileInset
+    }
+    
     // Mic and camera
     public func toggleMic() {
 #if !Preview
@@ -204,6 +208,7 @@ extension HMSRoomModel {
 #if !Preview
         return try await withCheckedThrowingContinuation { continuation in
             (localVideoTrackModel?.track as? HMSLocalVideoTrack)?.switchCamera({ error in
+                self.localVideoTrackModel?.updateMirrored()
                 if let error = error {
                     continuation.resume(throwing: error);
                 }

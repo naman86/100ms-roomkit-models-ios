@@ -14,6 +14,7 @@ public class HMSTrackModel: ObservableObject {
     public let id: String
     @Published public var isMute = false
     @Published public var isDegraded = false
+    @Published public var isMirrored = false
     
     weak var peerModel: HMSPeerModel?
     public let track: HMSTrack
@@ -23,6 +24,7 @@ public class HMSTrackModel: ObservableObject {
         self.isMute = track.isMute()
         self.peerModel = peerModel
         self.isDegraded = (track as? HMSVideoTrack)?.isDegraded() ?? false
+        self.isMirrored = (track as? HMSLocalVideoTrack)?.settings.cameraFacing == .front
         self.id = track.trackId
     }
     

@@ -68,7 +68,7 @@ public struct HMSTrackView: View {
         if let videoTrack = track.track as? HMSVideoTrack {
             
             if unsubscribeWhenOffscreen {
-                HMSVideoViewRepresentable(track: videoTrack, contentMode: contentMode, isZoomAndPanEnabled: isZoomAndPanEnabled, viewState: viewState)
+                HMSVideoViewRepresentable(track: videoTrack, contentMode: contentMode, isZoomAndPanEnabled: isZoomAndPanEnabled, isMirrored: track.isMirrored, viewState: viewState)
                     .onAppear() {
                         viewState.isOnScreen = true
                     }
@@ -77,7 +77,7 @@ public struct HMSTrackView: View {
                     }
             }
             else {
-                HMSVideoViewRepresentable(track: videoTrack, contentMode: contentMode, isZoomAndPanEnabled: isZoomAndPanEnabled, viewState: viewState)
+                HMSVideoViewRepresentable(track: videoTrack, contentMode: contentMode, isZoomAndPanEnabled: isZoomAndPanEnabled, isMirrored: track.isMirrored, viewState: viewState)
             }
         }
     }
@@ -92,22 +92,24 @@ internal struct HMSVideoViewRepresentable: UIViewRepresentable {
     var track: HMSVideoTrack
     var contentMode: UIView.ContentMode
     var isZoomAndPanEnabled: Bool
+    var isMirrored: Bool
     
     @ObservedObject var viewState: ViewState
     
-    init(track: HMSVideoTrack, contentMode: UIView.ContentMode = .scaleAspectFit, isZoomAndPanEnabled: Bool = false, viewState: ViewState) {
+    init(track: HMSVideoTrack, contentMode: UIView.ContentMode = .scaleAspectFit, isZoomAndPanEnabled: Bool = false, isMirrored: Bool, viewState: ViewState) {
         self.track = track
         self.contentMode = contentMode
         self.isZoomAndPanEnabled = isZoomAndPanEnabled
+        self.isMirrored = isMirrored
         self._viewState = ObservedObject(initialValue: viewState)
     }
 
     func makeUIView(context: Context) -> HMSVideoView {
-
         let videoView = HMSVideoView()
         videoView.setVideoTrack(track)
         videoView.videoContentMode = contentMode
         videoView.isZoomAndPanEnabled = isZoomAndPanEnabled
+        videoView.mirror = isMirrored
         return videoView
     }
 
@@ -117,6 +119,7 @@ internal struct HMSVideoViewRepresentable: UIViewRepresentable {
         } else {
             onDisappear(videoView, context: context)
         }
+        videoView.mirror = isMirrored
     }
     
     static func dismantleUIView(_ uiView: HMSVideoView, coordinator: ()) {

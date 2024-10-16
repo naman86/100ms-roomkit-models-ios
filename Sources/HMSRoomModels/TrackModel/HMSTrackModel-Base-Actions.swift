@@ -12,6 +12,10 @@ import HMSSDK
 @MainActor  
 extension HMSTrackModel {
     
+    public func updateMirrored() {
+        isMirrored = (track as? HMSLocalVideoTrack)?.settings.cameraFacing == .front
+    }
+    
     public func toggleMute() async throws {
         
 #if !Preview

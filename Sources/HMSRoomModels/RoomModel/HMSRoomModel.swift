@@ -42,6 +42,7 @@ public class HMSRoomModel: ObservableObject {
     @Published public var peersSharingScreen = [HMSPeerModel]()
     
     // Local peer states
+    @Published public var isLocalTileInset: Bool = true
     @Published public var isMicMute: Bool = true
     @Published public var isCameraMute: Bool = true
     @Published public var userName: String
