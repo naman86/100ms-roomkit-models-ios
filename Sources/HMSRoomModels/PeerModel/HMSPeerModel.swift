@@ -80,12 +80,12 @@ public class HMSPeerModel: ObservableObject {
         self.type = peer.type
         self.downlinkQuality = peer.networkQuality?.downlinkQuality
         
-        self.canScreenShare = peer.role?.publishSettings.allowed?.contains("screen") ?? false
+        self.canScreenShare = false //peer.role?.publishSettings.allowed?.contains("screen") ?? false
         self.canMute = peer.role?.permissions.mute ?? false
         self.canRemoveOthers = peer.role?.permissions.removeOthers ?? false
         let canEndRoom = peer.role?.permissions.endRoom ?? false
         self.canStartStopHLSStream = peer.role?.permissions.hlsStreaming ?? false
-        self.canStartStopRecording = peer.role?.permissions.browserRecording ?? false
+        self.canStartStopRecording = false //peer.role?.permissions.browserRecording ?? false
         
         self.canEndRoom = canEndRoom
         self.canUseNoiseCancellation = peer.role?.permissions.noiseCancellation?.enabled ?? false

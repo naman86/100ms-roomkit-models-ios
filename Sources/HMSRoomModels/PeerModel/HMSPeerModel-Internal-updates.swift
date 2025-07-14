@@ -31,14 +31,14 @@ extension HMSPeerModel {
         role = peer.role
         updateMetadata()
         
-        canScreenShare = role?.publishSettings.allowed?.contains("screen") ?? false
+        canScreenShare = false //role?.publishSettings.allowed?.contains("screen") ?? false
         roomModel?.didChangeScreenSharingState(for: self, state: .updated)
         canMute = peer.role?.permissions.mute ?? false
         self.canRemoveOthers = peer.role?.permissions.removeOthers ?? false
         
         self.canEndRoom = peer.role?.permissions.endRoom ?? false
         self.canStartStopHLSStream = peer.role?.permissions.hlsStreaming ?? false
-        self.canStartStopRecording = peer.role?.permissions.browserRecording ?? false
+        self.canStartStopRecording = false //peer.role?.permissions.browserRecording ?? false
         self.canUseNoiseCancellation = peer.role?.permissions.noiseCancellation?.enabled ?? false
         if isLocal {
             roomModel?.userCanEndRoom = canEndRoom
