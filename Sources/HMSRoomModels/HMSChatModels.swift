@@ -42,16 +42,4 @@ public enum HMSRecipient: Equatable {
     case everyone
     case role(HMSRole)
     case peer(HMSPeerModel)
-    
-    public func toString() -> String {
-        switch self {
-            
-        case .everyone:
-            return "Everyone"
-        case .role(let role):
-            return role.name.capitalized
-        case .peer(let peer):
-            return peer.name
-        }
-    }
 }
